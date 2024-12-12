@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".MainMenuActivity">
 
-    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/mainMenuFABPlay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -16,32 +16,22 @@
         android:text="@string/play"
         android:textAllCaps="true"
         android:textStyle="bold"
-        android:backgroundTint="@color/green300"
+        android:background="@color/white"
         android:layout_centerInParent="true"
+
         />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Assignment 1"
+        android:text="Avoid The Rocks Game"
+        android:textAlignment="center"
         android:layout_centerHorizontal="true"
         android:layout_alignParentTop="true"
         android:layout_marginTop="48dp"
-        android:textSize="48dp"
+        android:textSize="48sp"
         android:textStyle="bold"
         />
-    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        android:id="@+id/mainMenuFabExit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        android:layout_margin="10dp"
-        android:text="@string/play"
-        android:textColor="@color/white"
-        android:textAllCaps="true"
-        android:textStyle="bold"
-        android:backgroundTint="@color/mainBtnColor"
-        android:layout_centerInParent="true"
-        />
+
 
 </RelativeLayout>

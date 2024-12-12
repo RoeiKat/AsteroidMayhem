@@ -5,16 +5,17 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.material.floatingactionbutton.FloatingActionButton
+import androidx.appcompat.widget.AppCompatButton
 
 class MainMenuActivity : AppCompatActivity() {
 
-    private lateinit var mainMenuFABPlay: FloatingActionButton
+    private lateinit var mainMenuFABPlay: AppCompatButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_menu)
         findViews()
+        initViews()
     }
 
     private fun findViews() {

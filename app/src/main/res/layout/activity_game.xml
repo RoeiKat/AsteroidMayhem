@@ -6,12 +6,107 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".GameActivity">
+    tools:context=".GameActivity"
+
+    >
 
 
   <RelativeLayout
-      android:layout_width=""
-      android:layout_height="wrap_content">
+      android:id="@+id/gameArrowsContainer"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignParentBottom="true"
+      android:layout_margin="@dimen/containerMargin"
+
+      >
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/gameLeftBTN"
+        android:layout_width="@dimen/arrowSize"
+        android:layout_height="@dimen/arrowSize"
+        android:src="@drawable/avoid_the_rocks_left_arrow"
+        android:layout_alignParentLeft="true"
+        />
+
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/gameRightBTN"
+        android:layout_width="@dimen/arrowSize"
+        android:layout_height="@dimen/arrowSize"
+        android:src="@drawable/avoid_the_rocks_right_arrow"
+        android:layout_alignParentRight="true"
+        />
+  </RelativeLayout>
+
+  <RelativeLayout
+      android:id="@+id/gameShipContainer"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_above="@+id/gameArrowsContainer"
+      android:layout_marginBottom="@dimen/containerMargin"
+      >
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/gameSpaceshipIMG1"
+        android:layout_width="@dimen/spaceshipSize"
+        android:layout_height="@dimen/spaceshipSize"
+        android:src="@drawable/avoid_the_rocks_space_ship"
+        android:layout_alignParentRight="true"
+        />
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/gameSpaceshipIMG2"
+        android:layout_width="@dimen/spaceshipSize"
+        android:layout_height="@dimen/spaceshipSize"
+        android:src="@drawable/avoid_the_rocks_space_ship"
+        android:layout_centerInParent="true"
+        />
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/gameSpaceshipIMG3"
+        android:layout_width="@dimen/spaceshipSize"
+        android:layout_height="@dimen/spaceshipSize"
+        android:src="@drawable/avoid_the_rocks_space_ship"
+        android:layout_alignParentLeft="true"
+        />
+
+
+  </RelativeLayout>
+
+  <RelativeLayout
+      android:id="@+id/gameOrbitContainer"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_above="@+id/gameShipContainer"
+      android:layout_margin="@dimen/containerMargin">
+
+
+    <LinearLayout
+        android:id="@+id/gameOrbitCol1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+
+      <androidx.appcompat.widget.AppCompatImageView
+          android:id="@+id/gameOrbitIMG1"
+          android:layout_width="@dimen/orbitSize"
+          android:layout_height="@dimen/orbitSize"
+          android:src="@drawable/avoid_the_rocks_orbit"
+          />
+      <androidx.appcompat.widget.AppCompatImageView
+          android:id="@+id/gameOrbitIMG2"
+          android:layout_width="@dimen/orbitSize"
+          android:layout_height="@dimen/orbitSize"
+          android:src="@drawable/avoid_the_rocks_orbit"
+          />
+      <androidx.appcompat.widget.AppCompatImageView
+          android:id="@+id/gameOrbitIMG3"
+          android:layout_width="@dimen/orbitSize"
+          android:layout_height="@dimen/orbitSize"
+          android:src="@drawable/avoid_the_rocks_orbit"
+          android:layout_below="@id/gameOrbitIMG2"
+          />
+
+    </LinearLayout>
+
 
   </RelativeLayout>
 
