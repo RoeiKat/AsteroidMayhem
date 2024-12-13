@@ -5,4 +5,5 @@
     <dimen name="spaceshipSize">108dp</dimen>
     <dimen name="containerMargin">8dp</dimen>
     <dimen name="orbitSize">84dp</dimen>
+    <dimen name="heartSize">48dp</dimen>
 </resources>

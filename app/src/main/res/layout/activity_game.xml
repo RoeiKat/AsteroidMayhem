@@ -26,8 +26,37 @@
         android:src="@drawable/avoid_the_rocks_left_arrow"
         android:layout_alignParentLeft="true"
         android:importantForAccessibility="no"
-        android:background="none"
+        android:background="@color/white"
         />
+
+    <LinearLayout
+        android:layout_centerInParent="true"
+        android:id="@+id/gameHeartsContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        >
+      <androidx.appcompat.widget.AppCompatImageView
+          android:id="@+id/gameHeartIMG1"
+          android:layout_width="@dimen/heartSize"
+          android:layout_height="@dimen/heartSize"
+          android:src="@drawable/avoid_the_rocks_heart"
+          android:layout_margin="5dp"
+          />
+      <androidx.appcompat.widget.AppCompatImageView
+          android:id="@+id/gameHeartIMG2"
+          android:layout_width="@dimen/heartSize"
+          android:layout_height="@dimen/heartSize"
+          android:src="@drawable/avoid_the_rocks_heart"
+          android:layout_margin="5dp"
+          />
+      <androidx.appcompat.widget.AppCompatImageView
+          android:id="@+id/gameHeartIMG3"
+          android:layout_width="@dimen/heartSize"
+          android:layout_height="@dimen/heartSize"
+          android:src="@drawable/avoid_the_rocks_heart"
+          android:layout_margin="5dp"
+          />
+    </LinearLayout>
 
 
     <androidx.appcompat.widget.AppCompatImageButton
@@ -37,7 +66,7 @@
         android:src="@drawable/avoid_the_rocks_right_arrow"
         android:layout_alignParentRight="true"
         android:importantForAccessibility="no"
-        android:background="none"
+        android:background="@color/white"
         />
   </RelativeLayout>
 
