@@ -32,7 +32,11 @@ class GameManager(
     }
 
     public fun activateRandomOrbit() {
-        val chance = 70 + 10;
+        val chance = 70 + upChances;
+        if(chance + upChances > 100) {
+            val randomColSecond = (0..orbitCols - 1).random()
+            orbitsMatrix[randomColSecond][0] = true;
+        }
         val randomCol = (0..orbitCols - 1).random()
         val randomNum = (0..100).random()
         val chancesToActivate = randomNum < chance
