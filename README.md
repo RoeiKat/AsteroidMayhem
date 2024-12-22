@@ -18,7 +18,7 @@ Welcome to **Orbit Mayhem**, an exciting Android game where you navigate a space
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/orbit-mayhem.git
+   git clone https://github.com/RoeiKat/OrbitMayhem.git
    ```
 2. Open the project in **Android Studio**.
 3. Build the project to download all dependencies.
