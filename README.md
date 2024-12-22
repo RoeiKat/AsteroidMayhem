@@ -75,9 +75,8 @@ Welcome to **Orbit Mayhem**, an exciting Android game where you navigate a space
 
 ## Contact
 
-- **Developer**: Your Name
-- **Email**: your.email@example.com
-- **GitHub**: [yourusername](https://github.com/yourusername)
+- **Developer**: Roei Katabi
+- **Email**: roeikatabi@gmail.com
 
 ---
 
