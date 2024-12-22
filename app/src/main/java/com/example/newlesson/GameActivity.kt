@@ -21,18 +21,18 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class GameActivity : AppCompatActivity() {
-    private lateinit var mediaPlayer: MediaPlayer
+//    private lateinit var mediaPlayer: MediaPlayer
 
     private lateinit var gameTimerTXT: AppCompatTextView
 
     private var startTime: Long = 0
 
-    private lateinit var timerJob: Job
+    private var pauseTime: Long = 0
+    private var pauseDuration: Long = 0
 
-    private fun updateTimerUI() {
-        val currentTime = System.currentTimeMillis()
-        gameTimerTXT.text = TimeFormatter.formatTime(currentTime - startTime)
-    }
+    private var elapsedTime: Long = 0
+
+    private lateinit var timerJob: Job
 
     private var lowerDelay: Long = 0
     private var secondsTillNextDelay: Long = 10;
@@ -49,9 +49,9 @@ class GameActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        mediaPlayer = MediaPlayer.create(this, R.raw.game_background_music)
-        mediaPlayer.isLooping = true
-        mediaPlayer.start()
+//        mediaPlayer = MediaPlayer.create(this, R.raw.game_background_music)
+//        mediaPlayer.isLooping = true
+//        mediaPlayer.start()
 
         SignalManager.init(this)
 
@@ -62,6 +62,31 @@ class GameActivity : AppCompatActivity() {
         initViews()
         startTimer()
     }
+    override fun onPause() {
+        super.onPause()
+        timerJob.cancel()
+        pauseTime = System.currentTimeMillis()
+    }
+
+
+    override fun onResume() {
+        super.onResume()
+        val currentTime = System.currentTimeMillis()
+        if (pauseTime > 0) { // Ensure pauseTime is valid
+            pauseDuration += (currentTime - pauseTime)
+        }
+        timerJob = lifecycleScope.launch {
+            while (!gameManager.isGameOver) {
+                increaseIntensity()
+                gameManager.orbitTick()
+                gameManager.activateRandomOrbit()
+                gameManager.checkCollision(SignalManager.getInstance())
+                refreshUI()
+                delay(Constants.Timer.DELAY - lowerDelay)
+            }
+        }
+    }
+
 
     private fun findViews() {
         hearts = arrayOf(
@@ -129,23 +154,17 @@ class GameActivity : AppCompatActivity() {
 
     private fun startTimer() {
         startTime = System.currentTimeMillis()
-        timerJob = lifecycleScope.launch {
-            while (!gameManager.isGameOver) {
-                val currentTime = System.currentTimeMillis()
-                val seconds = ((currentTime - startTime) / 1000).toInt()
-                if( seconds > secondsTillNextDelay && lowerDelay < 500L) {
-                    gameManager.raiseChances()
-                    secondsTillNextDelay = seconds + 10L;
-                    lowerDelay += 100L
-                }
-                gameManager.activateRandomOrbit()
-                refreshUI()
-                delay(Constants.Timer.DELAY - 500L - lowerDelay)
-                gameManager.orbitTick()
-                gameManager.checkCollision(SignalManager.getInstance())
-                refreshUI()
-                delay(Constants.Timer.DELAY - lowerDelay)
-            }
+        pauseDuration = 0
+    }
+
+    private fun increaseIntensity() {
+        val currentTime = System.currentTimeMillis()
+        val elapsedSeconds = (currentTime - startTime - pauseDuration) / 1000
+
+        if( elapsedSeconds >= secondsTillNextDelay && lowerDelay < 500) {
+            gameManager.raiseChances()
+            secondsTillNextDelay += 20;
+            lowerDelay += 100
         }
     }
 
@@ -175,10 +194,10 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun moveToGameOverActivity(){
-        val currentTime = System.currentTimeMillis()
-        val time: String = TimeFormatter.formatTime(currentTime - startTime)
+        val time: String = TimeFormatter.formatTime(elapsedTime)
         val intent = Intent(this, GameOverActivity::class.java)
         val bundle = Bundle()
+        Log.d("ELAPSED - TIME: ",time)
         bundle.putString("TIME_PASSED", time)
         intent.putExtras(bundle)
         startActivity(intent)
@@ -186,15 +205,21 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun refreshUI() {
-        refreshOrbitLocationUI()
         updateTimerUI()
+        refreshOrbitLocationUI()
         if (gameManager.isGameOver) {
-            mediaPlayer.stop()
+//            mediaPlayer.stop()
             moveToGameOverActivity()
         }
         if (gameManager.hitCounter != 0) {
             hearts[hearts.size - gameManager.hitCounter].visibility =
                 View.INVISIBLE
         }
+    }
+
+    private fun updateTimerUI() {
+        val currentTime = System.currentTimeMillis()
+        elapsedTime = currentTime - startTime - pauseDuration
+        gameTimerTXT.text = TimeFormatter.formatTime(elapsedTime)
     }
 }

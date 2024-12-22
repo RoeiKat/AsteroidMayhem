@@ -11,8 +11,8 @@ class GameManager(
     private var orbitsMatrix: Array<Array<Boolean>> =
         Array(orbitCols) { Array(orbitRows + 1) { false } }
 
-    var upChances: Int = 0;
-    var hitCounter: Int = 0;
+    private var upChances: Int = 0
+    var hitCounter: Int = 0
     val isGameOver: Boolean
         get() = hitCounter == lifeCount
 

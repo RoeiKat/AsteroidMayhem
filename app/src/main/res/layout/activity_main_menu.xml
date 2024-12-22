@@ -5,6 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".MainMenuActivity">
 
     <androidx.appcompat.widget.AppCompatButton
@@ -14,9 +15,11 @@
         android:clickable="true"
         android:layout_margin="10dp"
         android:text="@string/play"
+        android:textSize="20sp"
         android:textAllCaps="true"
         android:textStyle="bold"
-        android:background="@color/white"
+        android:textColor="@color/white"
+        android:background="@color/black"
         android:layout_centerInParent="true"
 
         />
@@ -24,13 +27,13 @@
     <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Avoid The Rocks Game"
+        android:text="@string/newAppName"
         android:textAlignment="center"
         android:layout_centerHorizontal="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="60dp"
         android:textSize="48sp"
         android:textStyle="bold"
+        android:textColor="@color/black"
         />
 
 
