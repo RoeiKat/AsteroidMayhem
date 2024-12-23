@@ -21,7 +21,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class GameActivity : AppCompatActivity() {
-//    private lateinit var mediaPlayer: MediaPlayer
+    private lateinit var mediaPlayer: MediaPlayer
 
     private lateinit var gameTimerTXT: AppCompatTextView
 
@@ -49,9 +49,10 @@ class GameActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-//        mediaPlayer = MediaPlayer.create(this, R.raw.game_background_music)
-//        mediaPlayer.isLooping = true
-//        mediaPlayer.start()
+        mediaPlayer = MediaPlayer.create(this, R.raw.game_background_music)
+        mediaPlayer.isLooping = true
+
+        mediaPlayer.start()
 
         SignalManager.init(this)
 
@@ -208,7 +209,7 @@ class GameActivity : AppCompatActivity() {
         updateTimerUI()
         refreshOrbitLocationUI()
         if (gameManager.isGameOver) {
-//            mediaPlayer.stop()
+            mediaPlayer.stop()
             moveToGameOverActivity()
         }
         if (gameManager.hitCounter != 0) {
