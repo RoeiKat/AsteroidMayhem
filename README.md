@@ -49,7 +49,7 @@ Welcome to **Orbit Mayhem**, an exciting Android game where you navigate a space
 
 ## Gameplay
 
-![Demo](https://giphy.com/gifs/3Vx7vHTruG6Rzhr9uY)
+![Demo](https://media.giphy.com/media/3Vx7vHTruG6Rzhr9uYE/giphy.gif)
 
 ---
 
