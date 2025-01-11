@@ -14,19 +14,24 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 
 import androidx.lifecycle.lifecycleScope
+import com.example.newlesson.Interfaces.TiltCallback
 import com.example.newlesson.Logic.GameManager
 import com.example.newlesson.Util.TimeFormatter
 import com.example.newlesson.Util.Constants
 import com.example.newlesson.Util.MatrixObjects
+import com.example.newlesson.Util.TiltDetector
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlin.reflect.typeOf
 
 class GameActivity : AppCompatActivity() {
 
-    val bundle: Bundle? = intent.extras
+    private var tiltMode: Boolean = false
 
-    val tiltMode: Boolean? = bundle?.getBoolean("TILT_MODE", false)
+    private lateinit var tiltDetector: TiltDetector
+
+    private var lastTilt: Int = 0
 
     private lateinit var mediaPlayer: MediaPlayer
 
@@ -59,10 +64,14 @@ class GameActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
+        val bundle: Bundle? = intent.extras
+
+        tiltMode = bundle?.getBoolean("TILT_MODE", false)!!
+
         mediaPlayer = MediaPlayer.create(this, R.raw.game_background_music)
         mediaPlayer.isLooping = true
 
-        mediaPlayer.start()
+        initTiltDetector()
 
         SignalManager.init(this)
 
@@ -75,6 +84,8 @@ class GameActivity : AppCompatActivity() {
     }
     override fun onPause() {
         super.onPause()
+        tiltDetector.stop()
+        mediaPlayer.pause()
         timerJob.cancel()
         pauseTime = System.currentTimeMillis()
     }
@@ -82,6 +93,8 @@ class GameActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        tiltDetector.start()
+        mediaPlayer.start()
         val currentTime = System.currentTimeMillis()
         if (pauseTime > 0) { // Ensure pauseTime is valid
             pauseDuration += (currentTime - pauseTime)
@@ -166,8 +179,13 @@ class GameActivity : AppCompatActivity() {
                 viewsMatrixImg.visibility = View.INVISIBLE
             }
         }
-        leftArrowBtn.setOnClickListener { _: View -> moveLeft() }
-        rightArrowBtn.setOnClickListener { _: View -> moveRight() }
+        if(tiltMode) {
+            leftArrowBtn.visibility = View.INVISIBLE
+            rightArrowBtn.visibility = View.INVISIBLE
+        } else {
+            leftArrowBtn.setOnClickListener { _: View -> moveLeft() }
+            rightArrowBtn.setOnClickListener { _: View -> moveRight() }
+        }
     }
 
     private fun moveRight() {
@@ -194,6 +212,29 @@ class GameActivity : AppCompatActivity() {
             secondsTillNextDelay += 20;
             lowerDelay += 100
         }
+    }
+
+    private fun initTiltDetector() {
+        tiltDetector = TiltDetector(
+            context = this,
+            tiltCallback = object : TiltCallback {
+                override fun tiltX() {
+                    Log.d("Tilt X", "value: ${tiltDetector.tiltCounterX.toString()}")
+                    tiltDetector.tiltCounterX.toString().also {
+                        if(tiltDetector.tiltCounterX > lastTilt) {
+                            moveLeft()
+                            lastTilt = tiltDetector.tiltCounterX
+                        } else if(tiltDetector.tiltCounterX < lastTilt) {
+                            moveRight()
+                            lastTilt = tiltDetector.tiltCounterX
+                        }
+                    }
+                }
+                override fun tiltY() {
+                    tiltDetector.tiltCounterY.toString()
+                }
+            }
+        )
     }
 
     private fun refreshOrbitLocationUI() {
@@ -232,6 +273,7 @@ class GameActivity : AppCompatActivity() {
         val intent = Intent(this, GameOverActivity::class.java)
         val bundle = Bundle()
         bundle.putString("TIME_PASSED", time)
+        bundle.putBoolean("TILT_MODE", tiltMode)
         intent.putExtras(bundle)
         startActivity(intent)
         finish()

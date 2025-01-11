@@ -29,16 +29,13 @@ class MainMenuActivity : AppCompatActivity() {
 
     private fun initViews() {
         mainMenuFABPlay.setOnClickListener{ _: View -> moveToGameActivity()}
-        mainMenuTiltModeSwitch.setOnClickListener{_: View -> switchHandler()}
     }
 
-    private fun switchHandler() {
-        tiltMode = mainMenuTiltModeSwitch.isChecked
-    }
 
     private fun moveToGameActivity() {
-        val intent = Intent(this, GameActivity::class.java)
+        tiltMode = mainMenuTiltModeSwitch.isChecked
         val bundle = Bundle()
+        val intent = Intent(this, GameActivity::class.java)
         bundle.putBoolean("TILT_MODE", tiltMode)
         intent.putExtras(bundle)
         startActivity(intent)

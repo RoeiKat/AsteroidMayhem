@@ -15,7 +15,7 @@ class GameOverActivity : AppCompatActivity() {
         setContentView(R.layout.activity_game_over)
         val bundle: Bundle? = intent.extras
         gameOverTimeTXT = findViewById(R.id.gameOverTimeTXT)
-        gameOverTimeTXT.text = bundle?.getString("TIME_PASSED", "Unkown")
+        gameOverTimeTXT.text = bundle?.getString("TIME_PASSED", "Unknown")
 
     }
 }
