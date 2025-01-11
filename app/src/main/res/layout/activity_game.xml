@@ -38,7 +38,7 @@
       >
 
     <androidx.appcompat.widget.AppCompatImageButton
-        android:id="@+id/gameLeftBTN"
+        android:id="@+id/gameLeftArrowBTN"
         android:layout_width="@dimen/arrowSize"
         android:layout_height="@dimen/arrowSize"
         android:src="@drawable/avoid_the_rocks_left_arrow"
@@ -79,7 +79,7 @@
 
 
     <androidx.appcompat.widget.AppCompatImageButton
-        android:id="@+id/gameRightBTN"
+        android:id="@+id/gameRightArrowBTN"
         android:layout_width="@dimen/arrowSize"
         android:layout_height="@dimen/arrowSize"
         android:src="@drawable/avoid_the_rocks_right_arrow"

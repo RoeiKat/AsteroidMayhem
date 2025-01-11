@@ -71,7 +71,9 @@ class GameActivity : AppCompatActivity() {
         mediaPlayer = MediaPlayer.create(this, R.raw.game_background_music)
         mediaPlayer.isLooping = true
 
+        if(tiltMode) {
         initTiltDetector()
+        }
 
         SignalManager.init(this)
 
@@ -84,7 +86,9 @@ class GameActivity : AppCompatActivity() {
     }
     override fun onPause() {
         super.onPause()
+        if(tiltMode) {
         tiltDetector.stop()
+        }
         mediaPlayer.pause()
         timerJob.cancel()
         pauseTime = System.currentTimeMillis()
@@ -93,7 +97,9 @@ class GameActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        if(tiltMode) {
         tiltDetector.start()
+        }
         mediaPlayer.start()
         val currentTime = System.currentTimeMillis()
         if (pauseTime > 0) { // Ensure pauseTime is valid
@@ -163,8 +169,8 @@ class GameActivity : AppCompatActivity() {
             ),
 
         )
-        leftArrowBtn = findViewById(R.id.gameLeftBTN)
-        rightArrowBtn = findViewById(R.id.gameRightBTN)
+        leftArrowBtn = findViewById(R.id.gameLeftArrowBTN)
+        rightArrowBtn = findViewById(R.id.gameRightArrowBTN)
         gameTimerTXT = findViewById(R.id.gameTimerTXT)
     }
 
