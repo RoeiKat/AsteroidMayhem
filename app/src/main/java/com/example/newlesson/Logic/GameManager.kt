@@ -1,15 +1,18 @@
 package com.example.newlesson.Logic
 
 import SignalManager
+import android.opengl.Matrix
+import com.example.newlesson.Util.MatrixObjects
 
 class GameManager(
     private val lifeCount: Int = 3,
-    private val orbitCols: Int,
-    private val orbitRows: Int,
+    private val matrixCols: Int,
+    private val matrixRows: Int,
+    private val spaceshipRows: Int = 5,
 ) {
-    private var currentShipIndex: Int = 1 // Starting from the middle of the array (SHIP LOC)
-    private var orbitsMatrix: Array<Array<Boolean>> =
-        Array(orbitCols) { Array(orbitRows + 1) { false } }
+    private var currentShipIndex: Int = 2 // Starting from the middle of the array (SHIP LOC)
+    private var gameMatrix: Array<Array<MatrixObjects>> =
+        Array(matrixCols) { Array(matrixRows + 1) { MatrixObjects.EMPTY } }
 
     private var upChances: Int = 0
     var hitCounter: Int = 0
@@ -18,40 +21,62 @@ class GameManager(
 
 
 
-    public fun orbitTick() {
-        for (colIndex in orbitsMatrix.indices) {
-            for (rowIndex in orbitsMatrix[colIndex].size - 1 downTo 0) {
-                if (orbitsMatrix[colIndex][rowIndex]) {
-                    if (rowIndex < orbitsMatrix[colIndex].size - 1) {
-                        orbitsMatrix[colIndex][rowIndex + 1] = true
+    public fun matrixTick() {
+        for (colIndex in gameMatrix.indices) {
+            for (rowIndex in gameMatrix[colIndex].size - 1 downTo 0) {
+                if (gameMatrix[colIndex][rowIndex] != MatrixObjects.EMPTY) {
+                    if (rowIndex < gameMatrix[colIndex].size - 1) {
+                        gameMatrix[colIndex][rowIndex + 1] = gameMatrix[colIndex][rowIndex]
                     }
-                    orbitsMatrix[colIndex][rowIndex] = false
+                    gameMatrix[colIndex][rowIndex] = MatrixObjects.EMPTY
                 }
             }
         }
     }
 
-    public fun activateRandomOrbit() {
-        val chance = 70 + upChances;
-        if(chance + upChances > 100) {
-            val randomColSecond = (0..orbitCols - 1).random()
-            orbitsMatrix[randomColSecond][0] = true;
+
+    public fun activateRandomCell() {
+        val orbitChance = 70 + upChances
+        val heartChance = 50
+        if(orbitChance + upChances > 100) {
+            val randomColSecond = (0..matrixCols - 1).random()
+            if(gameMatrix[randomColSecond][0] == MatrixObjects.EMPTY) {
+                gameMatrix[randomColSecond][0] = MatrixObjects.ORBIT
+            }
         }
-        val randomCol = (0..orbitCols - 1).random()
-        val randomNum = (0..100).random()
-        val chancesToActivate = randomNum < chance
-        if (chancesToActivate) {
-            orbitsMatrix[randomCol][0] = true;
+        val randomCol = (0..matrixCols - 1).random()
+        val randomOrbitNum = (0..100).random()
+        val randomHeartNum = (0..100).random()
+
+        val heartOrOrbit = randomHeartNum > randomOrbitNum
+        if(heartOrOrbit) {
+            val chancesToActivateHeart = randomHeartNum < heartChance
+            if(chancesToActivateHeart) {
+                gameMatrix[randomCol][0] = MatrixObjects.HEART
+            }
+        } else {
+            val chancesToActivateOrbit = randomOrbitNum < orbitChance
+            if (chancesToActivateOrbit) {
+                  gameMatrix[randomCol][0] = MatrixObjects.ORBIT;
+            }
         }
     }
 
     public fun checkCollision(signalManager: SignalManager) {
-        for(col in orbitsMatrix.indices) {
-            for(row in orbitsMatrix[col].indices) {
-                if(row == orbitsMatrix[col].size - 1 && orbitsMatrix[col][row] && col == currentShipIndex) {
+        for(col in gameMatrix.indices) {
+            for(row in gameMatrix[col].indices) {
+                if(row == gameMatrix[col].size - 1 && gameMatrix[col][row] != MatrixObjects.EMPTY && col == currentShipIndex) {
+                    if(gameMatrix[col][row] == MatrixObjects.ORBIT) {
                     signalManager.toast("Collision")
                     signalManager.vibrate()
                     hitCounter++
+                    } else if(gameMatrix[col][row] == MatrixObjects.HEART && hitCounter > 0) {
+                        signalManager.toast("Extra life!")
+                        signalManager.vibrate()
+                        hitCounter --
+                    } else {
+                        return
+                    }
                 }
             }
         }
@@ -59,19 +84,17 @@ class GameManager(
 
 
     public fun moveRight() {
-        if (currentShipIndex > 0) {
-            currentShipIndex--
+        if (currentShipIndex < spaceshipRows - 1) {
+            currentShipIndex++
         } else {
-            // Out of bounds
             return
         }
     }
 
     public fun moveLeft() {
-        if (currentShipIndex < 2) {
-            currentShipIndex++
+        if (currentShipIndex > 0 ) {
+            currentShipIndex--
         } else {
-            // Out of bounds
             return
         }
     }
@@ -80,8 +103,8 @@ class GameManager(
         upChances+= 10
     }
 
-    public fun getOrbitMatrix(): Array<Array<Boolean>> {
-        return orbitsMatrix
+    public fun getGameMatrix(): Array<Array<MatrixObjects>> {
+        return gameMatrix
     }
 
     public fun getCurrentShipIndex(): Int {

@@ -2,6 +2,7 @@ package com.example.newlesson
 
 import SignalManager
 import android.content.Intent
+import android.graphics.drawable.Drawable
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.util.Log
@@ -16,11 +17,17 @@ import androidx.lifecycle.lifecycleScope
 import com.example.newlesson.Logic.GameManager
 import com.example.newlesson.Util.TimeFormatter
 import com.example.newlesson.Util.Constants
+import com.example.newlesson.Util.MatrixObjects
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class GameActivity : AppCompatActivity() {
+
+    val bundle: Bundle? = intent.extras
+
+    val tiltMode: Boolean? = bundle?.getBoolean("TILT_MODE", false)
+
     private lateinit var mediaPlayer: MediaPlayer
 
     private lateinit var gameTimerTXT: AppCompatTextView
@@ -42,7 +49,10 @@ class GameActivity : AppCompatActivity() {
     private lateinit var leftArrowBtn: AppCompatImageButton
     private lateinit var rightArrowBtn: AppCompatImageButton
     private lateinit var gameManager: GameManager
-    private lateinit var orbitCols: Array<Array<AppCompatImageView>>
+    private lateinit var viewsMatrix: Array<Array<AppCompatImageView>>
+
+    private val orbitIcon: Int = R.drawable.avoid_the_rocks_orbit
+    private val heartIcon: Int = R.drawable.avoid_the_rocks_heart
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,7 +69,7 @@ class GameActivity : AppCompatActivity() {
         setContentView(R.layout.activity_game)
 
         findViews()
-        gameManager = GameManager(hearts.size, orbitCols.size,orbitCols[0].size)
+        gameManager = GameManager(hearts.size, viewsMatrix.size,viewsMatrix[0].size, spaceShips.size)
         initViews()
         startTimer()
     }
@@ -79,8 +89,8 @@ class GameActivity : AppCompatActivity() {
         timerJob = lifecycleScope.launch {
             while (!gameManager.isGameOver) {
                 increaseIntensity()
-                gameManager.orbitTick()
-                gameManager.activateRandomOrbit()
+                gameManager.matrixTick()
+                gameManager.activateRandomCell()
                 gameManager.checkCollision(SignalManager.getInstance())
                 refreshUI()
                 delay(Constants.Timer.DELAY - lowerDelay)
@@ -98,30 +108,47 @@ class GameActivity : AppCompatActivity() {
         spaceShips = arrayOf(
             findViewById(R.id.gameSpaceshipIMG1),
             findViewById(R.id.gameSpaceshipIMG2),
-            findViewById(R.id.gameSpaceshipIMG3)
+            findViewById(R.id.gameSpaceshipIMG3),
+            findViewById(R.id.gameSpaceshipIMG4),
+            findViewById(R.id.gameSpaceshipIMG5)
         )
-        orbitCols = arrayOf(
+        viewsMatrix = arrayOf(
             arrayOf(
-                findViewById(R.id.gameOrbitIMG1),
-                findViewById(R.id.gameOrbitIMG2),
-                findViewById(R.id.gameOrbitIMG3),
-                findViewById(R.id.gameOrbitIMG4),
-                findViewById(R.id.gameOrbitIMG5)
+                findViewById(R.id.gameMatrixIMG1),
+                findViewById(R.id.gameMatrixIMG2),
+                findViewById(R.id.gameMatrixIMG3),
+                findViewById(R.id.gameMatrixIMG4),
+                findViewById(R.id.gameMatrixIMG5)
             ),
             arrayOf(
-                findViewById(R.id.gameOrbitIMG6),
-                findViewById(R.id.gameOrbitIMG7),
-                findViewById(R.id.gameOrbitIMG8),
-                findViewById(R.id.gameOrbitIMG9),
-                findViewById(R.id.gameOrbitIMG10)
+                findViewById(R.id.gameMatrixIMG6),
+                findViewById(R.id.gameMatrixIMG7),
+                findViewById(R.id.gameMatrixIMG8),
+                findViewById(R.id.gameMatrixIMG9),
+                findViewById(R.id.gameMatrixIMG10)
             ),
             arrayOf(
-                findViewById(R.id.gameOrbitIMG11),
-                findViewById(R.id.gameOrbitIMG12),
-                findViewById(R.id.gameOrbitIMG13),
-                findViewById(R.id.gameOrbitIMG14),
-                findViewById(R.id.gameOrbitIMG15)
-            )
+                findViewById(R.id.gameMatrixIMG11),
+                findViewById(R.id.gameMatrixIMG12),
+                findViewById(R.id.gameMatrixIMG13),
+                findViewById(R.id.gameMatrixIMG14),
+                findViewById(R.id.gameMatrixIMG15)
+            ),
+            arrayOf(
+                findViewById(R.id.gameMatrixIMG16),
+                findViewById(R.id.gameMatrixIMG17),
+                findViewById(R.id.gameMatrixIMG18),
+                findViewById(R.id.gameMatrixIMG19),
+                findViewById(R.id.gameMatrixIMG20)
+            ),
+            arrayOf(
+                findViewById(R.id.gameMatrixIMG21),
+                findViewById(R.id.gameMatrixIMG22),
+                findViewById(R.id.gameMatrixIMG23),
+                findViewById(R.id.gameMatrixIMG24),
+                findViewById(R.id.gameMatrixIMG25)
+            ),
+
         )
         leftArrowBtn = findViewById(R.id.gameLeftBTN)
         rightArrowBtn = findViewById(R.id.gameRightBTN)
@@ -134,9 +161,9 @@ class GameActivity : AppCompatActivity() {
                 spaceShip.visibility = View.INVISIBLE
             }
         }
-        for (orbitCol in orbitCols) {
-            for(orbitImg in orbitCol) {
-                orbitImg.visibility = View.INVISIBLE
+        for (viewsMatrixCol in viewsMatrix) {
+            for(viewsMatrixImg in viewsMatrixCol) {
+                viewsMatrixImg.visibility = View.INVISIBLE
             }
         }
         leftArrowBtn.setOnClickListener { _: View -> moveLeft() }
@@ -170,19 +197,25 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun refreshOrbitLocationUI() {
-        val orbitMatrix = gameManager.getOrbitMatrix()
-        for((colIndex, _) in orbitMatrix.withIndex()) {
-            for((rowIndex, _) in orbitMatrix[colIndex].withIndex()) {
-                if(rowIndex <= orbitCols[0].size - 1) {
-                    if(orbitMatrix[colIndex][rowIndex]) {
-                        orbitCols[colIndex][rowIndex].visibility = View.VISIBLE
+        val gameMatrix = gameManager.getGameMatrix()
+        for((colIndex, _) in gameMatrix.withIndex()) {
+            for((rowIndex, _) in gameMatrix[colIndex].withIndex()) {
+                if(rowIndex <= viewsMatrix[0].size - 1) {
+                    if(gameMatrix[colIndex][rowIndex] != MatrixObjects.EMPTY) {
+                        if(gameMatrix[colIndex][rowIndex] == MatrixObjects.ORBIT) {
+                            viewsMatrix[colIndex][rowIndex].setImageResource(orbitIcon)
+                        } else if(gameMatrix[colIndex][rowIndex] == MatrixObjects.HEART) {
+                            viewsMatrix[colIndex][rowIndex].setImageResource(heartIcon)
+                        }
+                        viewsMatrix[colIndex][rowIndex].visibility = View.VISIBLE
                     } else {
-                        orbitCols[colIndex][rowIndex].visibility = View.INVISIBLE
+                        viewsMatrix[colIndex][rowIndex].visibility = View.INVISIBLE
                     }
                 }
             }
         }
     }
+
 
     private fun refreshCarLocationUI() {
         for ((index, spaceship) in spaceShips.withIndex()) {
@@ -198,7 +231,6 @@ class GameActivity : AppCompatActivity() {
         val time: String = TimeFormatter.formatTime(elapsedTime)
         val intent = Intent(this, GameOverActivity::class.java)
         val bundle = Bundle()
-        Log.d("ELAPSED - TIME: ",time)
         bundle.putString("TIME_PASSED", time)
         intent.putExtras(bundle)
         startActivity(intent)
@@ -212,9 +244,12 @@ class GameActivity : AppCompatActivity() {
             mediaPlayer.stop()
             moveToGameOverActivity()
         }
-        if (gameManager.hitCounter != 0) {
-            hearts[hearts.size - gameManager.hitCounter].visibility =
-                View.INVISIBLE
+        for (index in hearts.indices) {
+            if (index < hearts.size - gameManager.hitCounter) {
+                hearts[index].visibility = View.VISIBLE
+            } else {
+                hearts[index].visibility = View.INVISIBLE
+            }
         }
     }
 

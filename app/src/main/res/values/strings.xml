@@ -2,5 +2,6 @@
     <string name="app_name">Orbit Mayhem</string>
     <string name="stop">STOP</string>
     <string name="play">PLAY</string>
-    <string name="newAppName">Orbit Mayhemgit</string>
+    <string name="newAppName">Orbit Mayhem</string>
+    <string name="tiltModeString">Tilt Mode</string>
 </resources>

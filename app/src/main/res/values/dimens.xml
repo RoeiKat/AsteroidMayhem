@@ -2,9 +2,9 @@
 <resources>
     <dimen name="timerTextSize">60dp</dimen>
     <dimen name="arrowSize">72dp</dimen>
-    <dimen name="spaceshipSize">108dp</dimen>
+    <dimen name="spaceshipSize">78dp</dimen>
     <dimen name="containerMargin">12dp</dimen>
-    <dimen name="orbitSize">84dp</dimen>
+    <dimen name="orbitSize">76dp</dimen>
     <dimen name="heartSize">48dp</dimen>
     <dimen name="orbitBottomMargin">4dp</dimen>
 </resources>

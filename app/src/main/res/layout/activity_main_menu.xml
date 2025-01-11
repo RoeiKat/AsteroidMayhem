@@ -23,6 +23,30 @@
         android:layout_centerInParent="true"
 
         />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/mainMenuFABPlay"
+        android:layout_centerInParent="true"
+        android:orientation="horizontal"
+        >
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:text="@string/tiltModeString"
+        android:textStyle="bold"
+        android:textSize="28sp"
+        android:layout_marginTop="4dp"
+        android:textColor="@color/black"
+        />
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/mainMenuTiltModeSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        />
+    </LinearLayout>
 
     <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="wrap_content"
