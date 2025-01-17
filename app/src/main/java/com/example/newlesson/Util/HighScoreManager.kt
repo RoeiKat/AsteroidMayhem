@@ -1,34 +1,27 @@
-package com.example.newlesson
-
 import android.content.Context
-import androidx.appcompat.app.AppCompatActivity
+import com.example.newlesson.objects.HighScoreData
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
-class HighScoreManager(context: Context) {
-    private val sharedPreferences = context.getSharedPreferences("high_scores", AppCompatActivity.MODE_PRIVATE)
+class HighScoreManager(private val context: Context) {
+    private val sharedPreferences = context.getSharedPreferences("high_scores_prefs", Context.MODE_PRIVATE)
     private val gson = Gson()
 
-    fun saveHighScores(highScores: ArrayList<Long>) {
-        val editor = sharedPreferences.edit()
+    private fun saveHighScores(highScores: ArrayList<HighScoreData>) {
         val json = gson.toJson(highScores)
-        editor.putString("high_scores", json)
-        editor.apply()
+        sharedPreferences.edit().putString("high_scores", json).apply()
     }
 
-    fun getHighScores(): ArrayList<Long> {
+    private fun getHighScores(): ArrayList<HighScoreData> {
         val json = sharedPreferences.getString("high_scores", null)
-        val type = object : TypeToken<ArrayList<Long>>() {}.type
+        val type = object : TypeToken<ArrayList<HighScoreData>>() {}.type
         return gson.fromJson(json, type) ?: ArrayList()
     }
 
-    fun updateHighScores(newScore: Long): ArrayList<Long> {
+    fun updateHighScores(newScore: HighScoreData): ArrayList<HighScoreData> {
         val highScores = getHighScores()
         highScores.add(newScore)
-        highScores.sortDescending()
-        if (highScores.size > 5) {
-            highScores.removeAt(highScores.size - 1)
-        }
+        highScores.sortByDescending { it.score }
         saveHighScores(highScores)
         return highScores
     }
