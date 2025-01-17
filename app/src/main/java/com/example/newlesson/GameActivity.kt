@@ -23,7 +23,6 @@ import com.example.newlesson.Util.TiltDetector
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlin.reflect.typeOf
 
 class GameActivity : AppCompatActivity() {
 
@@ -33,7 +32,7 @@ class GameActivity : AppCompatActivity() {
 
     private var lastTilt: Int = 0
 
-    private lateinit var mediaPlayer: MediaPlayer
+//    private lateinit var mediaPlayer: MediaPlayer
 
     private lateinit var gameTimerTXT: AppCompatTextView
 
@@ -68,8 +67,8 @@ class GameActivity : AppCompatActivity() {
 
         tiltMode = bundle?.getBoolean("TILT_MODE", false)!!
 
-        mediaPlayer = MediaPlayer.create(this, R.raw.game_background_music)
-        mediaPlayer.isLooping = true
+//        mediaPlayer = MediaPlayer.create(this, R.raw.game_background_music)
+//        mediaPlayer.isLooping = true
 
         if(tiltMode) {
         initTiltDetector()
@@ -89,7 +88,7 @@ class GameActivity : AppCompatActivity() {
         if(tiltMode) {
         tiltDetector.stop()
         }
-        mediaPlayer.pause()
+//        mediaPlayer.pause()
         timerJob.cancel()
         pauseTime = System.currentTimeMillis()
     }
@@ -100,7 +99,7 @@ class GameActivity : AppCompatActivity() {
         if(tiltMode) {
         tiltDetector.start()
         }
-        mediaPlayer.start()
+//        mediaPlayer.start()
         val currentTime = System.currentTimeMillis()
         if (pauseTime > 0) { // Ensure pauseTime is valid
             pauseDuration += (currentTime - pauseTime)
@@ -289,7 +288,7 @@ class GameActivity : AppCompatActivity() {
         updateTimerUI()
         refreshOrbitLocationUI()
         if (gameManager.isGameOver) {
-            mediaPlayer.stop()
+//            mediaPlayer.stop()
             moveToGameOverActivity()
         }
         for (index in hearts.indices) {

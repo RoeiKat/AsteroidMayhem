@@ -7,8 +7,11 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.SwitchCompat
+import com.example.newlesson.Util.LocationManager
 
 class MainMenuActivity : AppCompatActivity() {
+    private lateinit var locationManager: LocationManager
+
     private lateinit var mainMenuFABPlay: AppCompatButton
 
     private lateinit var mainMenuTiltModeSwitch: SwitchCompat
@@ -20,6 +23,15 @@ class MainMenuActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main_menu)
         findViews()
         initViews()
+
+        locationManager = LocationManager(this, { _ ->
+        })
+        locationManager.checkPermissionsAndStartLocationUpdates()
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        locationManager.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 
     private fun findViews() {
@@ -30,7 +42,6 @@ class MainMenuActivity : AppCompatActivity() {
     private fun initViews() {
         mainMenuFABPlay.setOnClickListener{ _: View -> moveToGameActivity()}
     }
-
 
     private fun moveToGameActivity() {
         tiltMode = mainMenuTiltModeSwitch.isChecked
