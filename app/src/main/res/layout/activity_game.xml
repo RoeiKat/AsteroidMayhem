@@ -11,7 +11,7 @@
   <RelativeLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_margin="8dp"
+      android:layout_marginTop="50dp"
       android:background="@color/white"
       android:id="@+id/gameTimerContainer"
       >
@@ -19,9 +19,10 @@
         android:id="@+id/gameTimerTXT"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="36sp"
+        android:textSize="24sp"
         android:text="@string/start_timer"
         android:textStyle="bold"
+        android:fontFamily="@font/press_start_2p"
         android:textColor="@color/black"
         android:layout_margin="8dp"
         android:layout_centerInParent="true"
@@ -89,64 +90,22 @@
         />
   </RelativeLayout>
 
-  <LinearLayout
-      android:id="@+id/gameShipContainer"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_above="@+id/gameArrowsContainer"
-      android:layout_margin="@dimen/containerMargin"
-      android:orientation="horizontal"
-      android:background="@color/white"
-      >
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/gameSpaceshipIMG1"
-        android:layout_width="@dimen/spaceshipSize"
-        android:layout_height="@dimen/spaceshipSize"
-        android:src="@drawable/avoid_the_rocks_space_ship"
-        />
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/gameSpaceshipIMG2"
-        android:layout_width="@dimen/spaceshipSize"
-        android:layout_height="@dimen/spaceshipSize"
-        android:src="@drawable/avoid_the_rocks_space_ship"
-        />
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/gameSpaceshipIMG3"
-        android:layout_width="@dimen/spaceshipSize"
-        android:layout_height="@dimen/spaceshipSize"
-        android:src="@drawable/avoid_the_rocks_space_ship"
-        />
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/gameSpaceshipIMG4"
-        android:layout_width="@dimen/spaceshipSize"
-        android:layout_height="@dimen/spaceshipSize"
-        android:src="@drawable/avoid_the_rocks_space_ship"
-        />
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/gameSpaceshipIMG5"
-        android:layout_width="@dimen/spaceshipSize"
-        android:layout_height="@dimen/spaceshipSize"
-        android:src="@drawable/avoid_the_rocks_space_ship"
-        />
-
-
-  </LinearLayout>
 
   <LinearLayout
       android:id="@+id/gameMatrix"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_above="@+id/gameShipContainer"
-      android:layout_margin="@dimen/containerMargin"
+      android:layout_width="wrap_content"
+      android:layout_height="match_parent"
+      android:layout_centerHorizontal="true"
+      android:padding="20dp"
+      android:layout_above="@id/gameArrowsContainer"
       android:background="@color/white"
       android:layout_below="@id/gameTimerContainer"
       >
 
-
     <LinearLayout
         android:id="@+id/gameMatrixCol1"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         android:background="@color/white"
         >
@@ -155,42 +114,50 @@
           android:id="@+id/gameMatrixIMG1"
           android:layout_width="@dimen/orbitSize"
           android:layout_height="@dimen/orbitSize"
+          android:layout_weight="1"
           android:src="@drawable/avoid_the_rocks_orbit"
-          android:layout_marginBottom="@dimen/orbitBottomMargin"
           />
       <androidx.appcompat.widget.AppCompatImageView
           android:id="@+id/gameMatrixIMG2"
           android:layout_width="@dimen/orbitSize"
+          android:layout_weight="1"
           android:layout_height="@dimen/orbitSize"
           android:src="@drawable/avoid_the_rocks_orbit"
-          android:layout_marginBottom="@dimen/orbitBottomMargin"
           />
       <androidx.appcompat.widget.AppCompatImageView
           android:id="@+id/gameMatrixIMG3"
           android:layout_width="@dimen/orbitSize"
           android:layout_height="@dimen/orbitSize"
+          android:layout_weight="1"
           android:src="@drawable/avoid_the_rocks_orbit"
-          android:layout_marginBottom="@dimen/orbitBottomMargin"
           />
       <androidx.appcompat.widget.AppCompatImageView
           android:id="@+id/gameMatrixIMG4"
           android:layout_width="@dimen/orbitSize"
           android:layout_height="@dimen/orbitSize"
+          android:layout_weight="1"
           android:src="@drawable/avoid_the_rocks_orbit"
-          android:layout_marginBottom="@dimen/orbitBottomMargin"
           />
       <androidx.appcompat.widget.AppCompatImageView
           android:id="@+id/gameMatrixIMG5"
           android:layout_width="@dimen/orbitSize"
           android:layout_height="@dimen/orbitSize"
+          android:layout_weight="1"
           android:src="@drawable/avoid_the_rocks_orbit"
-          android:layout_marginBottom="@dimen/orbitBottomMargin"
+          />
+
+      <androidx.appcompat.widget.AppCompatImageView
+          android:id="@+id/gameSpaceshipIMG1"
+          android:layout_width="@dimen/spaceshipSize"
+          android:layout_height="@dimen/spaceshipSize"
+          android:layout_weight="1"
+          android:src="@drawable/avoid_the_rocks_space_ship"
           />
     </LinearLayout>
     <LinearLayout
         android:id="@+id/gameMatrixCol2"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         android:background="@color/white"
         >
@@ -199,44 +166,49 @@
           android:id="@+id/gameMatrixIMG6"
           android:layout_width="@dimen/orbitSize"
           android:layout_height="@dimen/orbitSize"
+          android:layout_weight="1"
           android:src="@drawable/avoid_the_rocks_orbit"
-          android:layout_marginBottom="@dimen/orbitBottomMargin"
           />
       <androidx.appcompat.widget.AppCompatImageView
           android:id="@+id/gameMatrixIMG7"
           android:layout_width="@dimen/orbitSize"
           android:layout_height="@dimen/orbitSize"
+          android:layout_weight="1"
           android:src="@drawable/avoid_the_rocks_orbit"
-          android:layout_marginBottom="@dimen/orbitBottomMargin"
           />
       <androidx.appcompat.widget.AppCompatImageView
           android:id="@+id/gameMatrixIMG8"
           android:layout_width="@dimen/orbitSize"
           android:layout_height="@dimen/orbitSize"
+          android:layout_weight="1"
           android:src="@drawable/avoid_the_rocks_orbit"
-          android:layout_marginBottom="@dimen/orbitBottomMargin"
           />
       <androidx.appcompat.widget.AppCompatImageView
           android:id="@+id/gameMatrixIMG9"
           android:layout_width="@dimen/orbitSize"
           android:layout_height="@dimen/orbitSize"
+          android:layout_weight="1"
           android:src="@drawable/avoid_the_rocks_orbit"
-          android:layout_marginBottom="@dimen/orbitBottomMargin"
           />
       <androidx.appcompat.widget.AppCompatImageView
           android:id="@+id/gameMatrixIMG10"
           android:layout_width="@dimen/orbitSize"
           android:layout_height="@dimen/orbitSize"
+          android:layout_weight="1"
           android:src="@drawable/avoid_the_rocks_orbit"
-          android:layout_marginBottom="@dimen/orbitBottomMargin"
           />
-
-
+      <androidx.appcompat.widget.AppCompatImageView
+          android:id="@+id/gameSpaceshipIMG2"
+          android:layout_width="@dimen/spaceshipSize"
+          android:layout_height="@dimen/spaceshipSize"
+          android:layout_weight="1"
+          android:src="@drawable/avoid_the_rocks_space_ship"
+          />
     </LinearLayout>
     <LinearLayout
         android:id="@+id/gameMatrixCol3"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         android:background="@color/white"
         >
@@ -246,89 +218,98 @@
           android:layout_width="@dimen/orbitSize"
           android:layout_height="@dimen/orbitSize"
           android:src="@drawable/avoid_the_rocks_orbit"
-          android:layout_marginBottom="@dimen/orbitBottomMargin"
+          android:layout_weight="1"
           />
       <androidx.appcompat.widget.AppCompatImageView
           android:id="@+id/gameMatrixIMG12"
           android:layout_width="@dimen/orbitSize"
           android:layout_height="@dimen/orbitSize"
           android:src="@drawable/avoid_the_rocks_orbit"
-          android:layout_marginBottom="@dimen/orbitBottomMargin"
+          android:layout_weight="1"
           />
       <androidx.appcompat.widget.AppCompatImageView
           android:id="@+id/gameMatrixIMG13"
           android:layout_width="@dimen/orbitSize"
           android:layout_height="@dimen/orbitSize"
           android:src="@drawable/avoid_the_rocks_orbit"
-          android:layout_marginBottom="@dimen/orbitBottomMargin"
+          android:layout_weight="1"
           />
       <androidx.appcompat.widget.AppCompatImageView
           android:id="@+id/gameMatrixIMG14"
           android:layout_width="@dimen/orbitSize"
           android:layout_height="@dimen/orbitSize"
           android:src="@drawable/avoid_the_rocks_orbit"
-          android:layout_marginBottom="@dimen/orbitBottomMargin"
+          android:layout_weight="1"
           />
       <androidx.appcompat.widget.AppCompatImageView
           android:id="@+id/gameMatrixIMG15"
           android:layout_width="@dimen/orbitSize"
           android:layout_height="@dimen/orbitSize"
           android:src="@drawable/avoid_the_rocks_orbit"
-          android:layout_marginBottom="@dimen/orbitBottomMargin"
+          android:layout_weight="1"
           />
-
-
+      <androidx.appcompat.widget.AppCompatImageView
+          android:id="@+id/gameSpaceshipIMG3"
+          android:layout_width="@dimen/spaceshipSize"
+          android:layout_height="@dimen/spaceshipSize"
+          android:layout_weight="1"
+          android:src="@drawable/avoid_the_rocks_space_ship"
+          />
     </LinearLayout>
     <LinearLayout
         android:id="@+id/gameMatrixCol4"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         android:background="@color/white"
         >
-
       <androidx.appcompat.widget.AppCompatImageView
           android:id="@+id/gameMatrixIMG16"
           android:layout_width="@dimen/orbitSize"
           android:layout_height="@dimen/orbitSize"
           android:src="@drawable/avoid_the_rocks_orbit"
-          android:layout_marginBottom="@dimen/orbitBottomMargin"
+          android:layout_weight="1"
           />
       <androidx.appcompat.widget.AppCompatImageView
           android:id="@+id/gameMatrixIMG17"
           android:layout_width="@dimen/orbitSize"
           android:layout_height="@dimen/orbitSize"
           android:src="@drawable/avoid_the_rocks_orbit"
-          android:layout_marginBottom="@dimen/orbitBottomMargin"
+          android:layout_weight="1"
           />
       <androidx.appcompat.widget.AppCompatImageView
           android:id="@+id/gameMatrixIMG18"
           android:layout_width="@dimen/orbitSize"
           android:layout_height="@dimen/orbitSize"
           android:src="@drawable/avoid_the_rocks_orbit"
-          android:layout_marginBottom="@dimen/orbitBottomMargin"
+          android:layout_weight="1"
           />
       <androidx.appcompat.widget.AppCompatImageView
           android:id="@+id/gameMatrixIMG19"
           android:layout_width="@dimen/orbitSize"
           android:layout_height="@dimen/orbitSize"
           android:src="@drawable/avoid_the_rocks_orbit"
-          android:layout_marginBottom="@dimen/orbitBottomMargin"
+          android:layout_weight="1"
           />
       <androidx.appcompat.widget.AppCompatImageView
           android:id="@+id/gameMatrixIMG20"
           android:layout_width="@dimen/orbitSize"
           android:layout_height="@dimen/orbitSize"
           android:src="@drawable/avoid_the_rocks_orbit"
-          android:layout_marginBottom="@dimen/orbitBottomMargin"
+          android:layout_weight="1"
           />
-
-
+      <androidx.appcompat.widget.AppCompatImageView
+          android:id="@+id/gameSpaceshipIMG4"
+          android:layout_weight="1"
+          android:layout_width="@dimen/spaceshipSize"
+          android:layout_height="@dimen/spaceshipSize"
+          android:src="@drawable/avoid_the_rocks_space_ship"
+          />
     </LinearLayout>
     <LinearLayout
         android:id="@+id/gameMatrixCol5"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         android:background="@color/white"
         >
@@ -338,35 +319,43 @@
           android:layout_width="@dimen/orbitSize"
           android:layout_height="@dimen/orbitSize"
           android:src="@drawable/avoid_the_rocks_orbit"
-          android:layout_marginBottom="@dimen/orbitBottomMargin"
+          android:layout_weight="1"
           />
       <androidx.appcompat.widget.AppCompatImageView
           android:id="@+id/gameMatrixIMG22"
           android:layout_width="@dimen/orbitSize"
           android:layout_height="@dimen/orbitSize"
           android:src="@drawable/avoid_the_rocks_orbit"
-          android:layout_marginBottom="@dimen/orbitBottomMargin"
+          android:layout_weight="1"
           />
       <androidx.appcompat.widget.AppCompatImageView
           android:id="@+id/gameMatrixIMG23"
           android:layout_width="@dimen/orbitSize"
           android:layout_height="@dimen/orbitSize"
           android:src="@drawable/avoid_the_rocks_orbit"
-          android:layout_marginBottom="@dimen/orbitBottomMargin"
+          android:layout_weight="1"
           />
       <androidx.appcompat.widget.AppCompatImageView
           android:id="@+id/gameMatrixIMG24"
           android:layout_width="@dimen/orbitSize"
           android:layout_height="@dimen/orbitSize"
           android:src="@drawable/avoid_the_rocks_orbit"
-          android:layout_marginBottom="@dimen/orbitBottomMargin"
+          android:layout_weight="1"
           />
       <androidx.appcompat.widget.AppCompatImageView
           android:id="@+id/gameMatrixIMG25"
           android:layout_width="@dimen/orbitSize"
           android:layout_height="@dimen/orbitSize"
           android:src="@drawable/avoid_the_rocks_orbit"
-          android:layout_marginBottom="@dimen/orbitBottomMargin"
+          android:layout_weight="1"
+          />
+
+      <androidx.appcompat.widget.AppCompatImageView
+          android:id="@+id/gameSpaceshipIMG5"
+          android:layout_width="@dimen/spaceshipSize"
+          android:layout_height="@dimen/spaceshipSize"
+          android:layout_weight="1"
+          android:src="@drawable/avoid_the_rocks_space_ship"
           />
 
 
