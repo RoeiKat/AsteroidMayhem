@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Orbit Mayhem</string>
+    <string name="app_name">ORBIT MAYHEM</string>
     <string name="stop">STOP</string>
     <string name="play">PLAY</string>
     <string name="newAppName">Orbit Mayhem</string>
@@ -10,4 +10,5 @@
     <string name="location">Location</string>
     <string name="player">Player</string>
     <string name="high_scores">High Scores</string>
+    <string name="start_timer">00:00:00</string>
 </resources>

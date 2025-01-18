@@ -1,9 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-//    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
+    alias(libs.plugins.secrets.gradle)
 }
-
 
 android {
     namespace = "com.example.newlesson"
@@ -36,7 +35,7 @@ android {
         jvmTarget = "11"
     }
     buildFeatures {
-            buildConfig = true
+        buildConfig = true
     }
 }
 
@@ -48,19 +47,18 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
     implementation(libs.play.services.location)
 
+    implementation(libs.google.maps)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
     implementation(libs.gson)
-//    implementation("com.google.android.gms:play-services-maps:19.0.0")
 }
 
-//secrets {
-//    propertiesFileName = "local.properties"
-//
-//    defaultPropertiesFileName = "local.properties"
-//
-//    ignoreList.add("keyToIgnore")
-//    ignoreList.add("sdk.*")
-//}
+secrets {
+    propertiesFileName = "secrets.properties"
+    defaultPropertiesFileName = "local.properties"
+    ignoreList.add("keyToIgnore")
+    ignoreList.add("sdk.*")
+}

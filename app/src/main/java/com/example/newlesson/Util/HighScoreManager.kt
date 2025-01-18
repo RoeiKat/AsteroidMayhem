@@ -22,8 +22,9 @@ class HighScoreManager(private val context: Context) {
         val highScores = getHighScores()
         highScores.add(newScore)
         highScores.sortByDescending { it.score }
-        saveHighScores(highScores)
-        return highScores
+        val topScores = highScores.take(4) as ArrayList<HighScoreData>
+        saveHighScores(topScores)
+        return topScores
     }
 }
 
