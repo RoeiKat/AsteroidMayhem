@@ -6,18 +6,29 @@
     android:padding="16dp">
 
     <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/playerTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:text="@string/player"
+        android:textColor="@color/black"
+        />
+
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/scoreTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:textSize="18sp"
-        android:gravity="center" />
+        android:gravity="center"
+        android:textColor="@color/black"
+        />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/locationButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/black"
-        android:text="Location" />
+        android:text="@string/location" />
 
 </LinearLayout>

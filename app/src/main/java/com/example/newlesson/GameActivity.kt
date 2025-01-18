@@ -17,14 +17,15 @@ import androidx.lifecycle.lifecycleScope
 import com.example.newlesson.Interfaces.TiltCallback
 import com.example.newlesson.Logic.GameManager
 import com.example.newlesson.Util.TimeFormatter
-import com.example.newlesson.Util.Constants
 import com.example.newlesson.Util.MatrixObjects
 import com.example.newlesson.Util.TiltDetector
+import com.example.newlesson.objects.Constants
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class GameActivity : AppCompatActivity() {
+    private var playerName: String? = ""
 
     private var tiltMode: Boolean = false
 
@@ -65,7 +66,8 @@ class GameActivity : AppCompatActivity() {
 
         val bundle: Bundle? = intent.extras
 
-        tiltMode = bundle?.getBoolean("TILT_MODE", false)!!
+        playerName = bundle?.getString(Constants.Keys.PLAYER_NAME,"Player")
+        tiltMode = bundle?.getBoolean(Constants.Keys.TILT_MODE, false)!!
 
 //        mediaPlayer = MediaPlayer.create(this, R.raw.game_background_music)
 //        mediaPlayer.isLooping = true
@@ -224,7 +226,6 @@ class GameActivity : AppCompatActivity() {
             context = this,
             tiltCallback = object : TiltCallback {
                 override fun tiltX() {
-                    Log.d("Tilt X", "value: ${tiltDetector.tiltCounterX.toString()}")
                     tiltDetector.tiltCounterX.toString().also {
                         if(tiltDetector.tiltCounterX > lastTilt) {
                             moveLeft()
@@ -277,8 +278,9 @@ class GameActivity : AppCompatActivity() {
         val time: String = TimeFormatter.formatTime(elapsedTime)
         val intent = Intent(this, GameOverActivity::class.java)
         val bundle = Bundle()
-        bundle.putString("TIME_PASSED", time)
-        bundle.putBoolean("TILT_MODE", tiltMode)
+        bundle.putString(Constants.Keys.TIME_PASSED, time)
+        bundle.putBoolean(Constants.Keys.TILT_MODE, tiltMode)
+        bundle.putString(Constants.Keys.PLAYER_NAME, playerName)
         intent.putExtras(bundle)
         startActivity(intent)
         finish()

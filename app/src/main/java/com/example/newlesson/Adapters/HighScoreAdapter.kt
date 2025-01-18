@@ -22,19 +22,21 @@ class HighScoreAdapter(private val highScores: List<HighScoreData>) :
 
     override fun onBindViewHolder(holder: HighScoreViewHolder, position: Int) {
         val highScoreData = highScores[position]
+        holder.playerTextView.text = highScoreData.playerName
         holder.scoreTextView.text = TimeFormatter.formatHighScoreTime(highScoreData.score)
         holder.locationButton.setOnClickListener {
-            Toast.makeText(holder.itemView.context,
-                "Lat: ${highScoreData.latitude}, Long: ${highScoreData.longitude}",
-                Toast.LENGTH_LONG).show()
+            Toast.makeText(holder.itemView.context, "Lat: ${highScoreData.latitude}, Long: ${highScoreData.longitude}", Toast.LENGTH_LONG).show()
         }
     }
 
     override fun getItemCount(): Int = highScores.size
 
     class HighScoreViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val playerTextView: MaterialTextView = itemView.findViewById(R.id.playerTextView)
         val scoreTextView: MaterialTextView = itemView.findViewById(R.id.scoreTextView)
         val locationButton: MaterialButton = itemView.findViewById(R.id.locationButton)
     }
 }
+
+
 

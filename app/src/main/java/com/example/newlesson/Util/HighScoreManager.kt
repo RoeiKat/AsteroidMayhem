@@ -26,3 +26,5 @@ class HighScoreManager(private val context: Context) {
         return highScores
     }
 }
+
+
