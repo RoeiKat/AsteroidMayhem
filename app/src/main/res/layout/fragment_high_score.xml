@@ -12,10 +12,14 @@
         android:layout_height="wrap_content"
         android:text="@string/high_scores"
         android:gravity="center"
-        android:padding="20dp"
-        android:textSize="32sp"
+        android:padding="30dp"
+        android:textSize="24sp"
+        android:textAlignment="center"
+        android:fontFamily="@font/press_start_2p"
         android:textStyle="bold"
-        android:textColor="@color/black"/>
+        android:textColor="@color/white"
+        android:background="@color/black"
+        />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/highScoresRecyclerView"

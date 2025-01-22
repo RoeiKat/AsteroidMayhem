@@ -9,8 +9,9 @@
         android:id="@+id/playerTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
+        android:textSize="12sp"
         android:text="@string/player"
+        android:fontFamily="@font/press_start_2p"
         android:textColor="@color/black"
         />
 
@@ -19,8 +20,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:textSize="18sp"
+        android:textSize="12sp"
         android:gravity="center"
+        android:fontFamily="@font/press_start_2p"
         android:textColor="@color/black"
         />
 
@@ -29,6 +31,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/black"
-        android:text="@string/location" />
+        android:text="@string/location"
+        android:textSize="12sp"
+        android:fontFamily="@font/press_start_2p"
+        android:textColor="@color/white"/>
 
 </LinearLayout>
